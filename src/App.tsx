@@ -1,35 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Booking from "./booking";
+export default function App() {
 
-function App() {
-  const [count, setCount] = useState(0)
+  const layout = {
+    info: { title: "Awesome Movie Hall", subtitle: "Select your preferred seats" },
+    rows: 8,
+    seatsPerRow: 12,
+    aislePositions: [5],
+    currency: "INR",
+    bookedSeats: [],
+    onBookingComplete: (ids = []) => { },
+
+    seatTypes: [
+      { id: "regular", name: "Regular", price: 150, rows: [0, 1, 2], color: "#D8EBFE" },
+      { id: "premium", name: "Premium", price: 250, rows: [3, 4, 5], color: "#F5E9FE" },
+      { id: "vip", name: "VIP", price: 350, rows: [6, 7], color: "#FDFAC6" },
+    ],
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Booking data={layout} />
     </>
   )
 }
-
-export default App
