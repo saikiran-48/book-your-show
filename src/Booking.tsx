@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Divider, Snackbar, Typography, type SnackbarCloseReason } from '@mui/material'
+import { Alert, Box, Button, Divider, Snackbar, Typography } from '@mui/material'
 import { useMemo } from 'react';
 import { useState } from 'react';
 
@@ -26,10 +26,11 @@ function Booking({ data }: any) {
     const totalPrice = useMemo(() => {
         return selectedSeats.reduce((acc, seatId) => {
             const rowIndex = seatId.charCodeAt(0) - 65;
+            console.log('rowIndex', rowIndex);
             const seatType = (data?.seatTypes ?? []).find((type: any) =>
                 type.rows?.includes(rowIndex)
             );
-            return acc + (seatType?.price ?? 0);
+            return acc + seatType?.price ;
         }, 0);
     }, [selectedSeats]);
 
@@ -40,6 +41,7 @@ function Booking({ data }: any) {
         setOpen(true);
         setTimeout(() => {
             setOpen(false);
+            setSelectedSeats([]);
         }, 3000);
     }
 
@@ -68,8 +70,7 @@ function Booking({ data }: any) {
                                         <>
                                             <Button
                                                 key={seatId}
-                                                disabled={data?.bookedSeats.includes(`${rowAlphabet}${j + 1}`)}
-                                                // disabled={data?.bookedSeats.includes(seatId)}
+                                                disabled={data?.bookedSeats.includes(seatId)}
                                                 onClick={() => toggleSeat(seatId)}
                                                 variant={isSelected ? 'contained' : 'outlined'}
                                                 sx={{
